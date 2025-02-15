@@ -9,3 +9,13 @@ jobs:
     steps:
       - name: Run hello world
         run: echo "🎉 Step of the job is running on ${{ runner.os }}!"
+      - uses: ./.github/actions/build-dotnet-app
+        with:
+          folder-path: apps/uptodate-app
+  second-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run another workflow
+        uses: ./.github/workflows/greeter.yml
+        with:
+          person-name: "John"
