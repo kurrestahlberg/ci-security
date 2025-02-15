@@ -24,4 +24,10 @@ jobs:
         with:
           project: "CI Security"
           path: "./output"
-          format: "ALL"
+          format: "HTML"
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: "Dependency Check"
+          path: "./output/dependency-check-report.html"
+          if-no-files-found: error
