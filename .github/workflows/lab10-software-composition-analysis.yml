@@ -25,9 +25,9 @@ jobs:
           project: "CI Security"
           path: "./output"
           format: "HTML"
-      - name: Upload results
+      - name: Upload Test results
         uses: actions/upload-artifact@v4
         with:
-          name: "Dependency Check"
-          path: "/github/workspace/reports/dependency-check-report.html"
+          name: Depcheck report
+          path: ${{github.workspace}}/reports
           if-no-files-found: error
