@@ -7,5 +7,21 @@ jobs:
   example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Run hello world
-        run: echo "🎉 Step of the job is running on ${{ runner.os }}!"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        uses: ./.github/actions/build-dotnet-app
+        with:
+          folder-path: apps/uptodate-app
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - uses: dependency-check/Dependency-Check_Action@main
+        env:
+          JAVA_HOME: /opt/jdk
+        with:
+          project: "CI Security"
+          path: "./output"
+          format: "ALL"
