@@ -4,7 +4,7 @@ permissions: read-all
 on:
   workflow_dispatch:
 jobs:
-  example-job:
+  dependency-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -13,14 +13,7 @@ jobs:
         uses: ./.github/actions/build-dotnet-app
         with:
           folder-path: apps/uptodate-app
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: "17"
-          distribution: "temurin"
       - uses: dependency-check/Dependency-Check_Action@main
-        env:
-          JAVA_HOME: /opt/jdk
         with:
           project: "CI Security"
           path: "./output"
