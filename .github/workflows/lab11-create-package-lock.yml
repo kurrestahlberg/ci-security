@@ -7,5 +7,18 @@ jobs:
   example-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Run hello world
-        run: echo "🎉 Step of the job is running on ${{ runner.os }}!"
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Ensure proper version of .NET
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+      # Ensure this to make sure to actually test against real deal
+      - name: Install .NET dependencies
+        run: dotnet restore --lock-file-path package.lock.json --use-lock-file
+      - name: Install with lock file
+        run: dotnet restore --lock-file-path package.lock.json --locked-mode --use-lock-file
+      # Sometimes (even when considered as a bad practice) part of the dependencies are fetched during build, so better to build first
+      - name: Build application
+        run: dotnet build --no-restore
