@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run another workflow
-        uses: ./.github/workflows/greeter.yml
+      - uses: ./.github/workflows/greeter.yml
         with:
           person-name: "John"
